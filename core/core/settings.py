@@ -1,133 +1,130 @@
-from pathlib import Path
-from decouple import config
+from pathlib import Path  # مدیریت مسیرها
+from decouple import config  # خواندن متغیرهای محیطی از فایل .env
 
-# Build paths inside the project like this: BASE_DIR / 'subdir'.
-BASE_DIR = Path(__file__).resolve().parent.parent
+# ======================================================================================================================
+# مسیرهای پایه پروژه
 
+BASE_DIR = Path(__file__).resolve().parent.parent  # مسیر دایرکتوری اصلی پروژه
 
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
+# ======================================================================================================================
+# تنظیمات سریع توسعه (برای production مناسب نیست)
 
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-buc1pi3l8qmuwpc)=@@q6_bw30j05-ap6x-cup8g=bp$!^udbj'
+SECRET_KEY = "django-insecure-buc1pi3l8qmuwpc)=@@q6_bw30j05-ap6x-cup8g=bp$!^udbj"  # کلید محرمانه پروژه
+DEBUG = True  # حالت توسعه (برای تولید باید False شود)
+ALLOWED_HOSTS = []  # دامنه‌های مجاز برای دسترسی به سرور
 
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
-
-ALLOWED_HOSTS = []
-
-
-# Application definition
+# ======================================================================================================================
+# برنامه‌های نصب شده
 
 INSTALLED_APPS = [
-    'django.contrib.admin',
-    'django.contrib.auth',
-    'django.contrib.contenttypes',
-    'django.contrib.sessions',
-    'django.contrib.messages',
-    'django.contrib.staticfiles',
-    'rest_framework',
-    'drf_yasg',
-    'corsheaders',
-
-    'weather',
+    "django.contrib.admin",  # پنل مدیریت
+    "django.contrib.auth",  # سیستم احراز هویت
+    "django.contrib.contenttypes",  # مدیریت مدل‌ها
+    "django.contrib.sessions",  # مدیریت سشن‌ها
+    "django.contrib.messages",  # پیام‌ها
+    "django.contrib.staticfiles",  # مدیریت فایل‌های استاتیک
+    "rest_framework",  # Django REST Framework
+    "drf_yasg",  # مستندسازی API با Swagger
+    "corsheaders",  # مدیریت CORS
+    "weather",  # اپلیکیشن هواشناسی
 ]
+
+# ======================================================================================================================
+# Middlewareها
 
 MIDDLEWARE = [
-    'corsheaders.middleware.CorsMiddleware',
-    'django.middleware.security.SecurityMiddleware',
-    'django.contrib.sessions.middleware.SessionMiddleware',
-    'django.middleware.common.CommonMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware',
-    'django.contrib.auth.middleware.AuthenticationMiddleware',
-    'django.contrib.messages.middleware.MessageMiddleware',
-    'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    "corsheaders.middleware.CorsMiddleware",  # مدیریت CORS
+    "django.middleware.security.SecurityMiddleware",
+    "django.contrib.sessions.middleware.SessionMiddleware",
+    "django.middleware.common.CommonMiddleware",
+    "django.middleware.csrf.CsrfViewMiddleware",
+    "django.contrib.auth.middleware.AuthenticationMiddleware",
+    "django.contrib.messages.middleware.MessageMiddleware",
+    "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
 
-ROOT_URLCONF = 'core.urls'
+# ======================================================================================================================
+# تنظیمات URL و Template
+
+ROOT_URLCONF = "core.urls"  # فایل URL اصلی پروژه
 
 TEMPLATES = [
     {
-        'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [BASE_DIR / 'templates'],
-        'APP_DIRS': True,
-        'OPTIONS': {
-            'context_processors': [
-                'django.template.context_processors.debug',
-                'django.template.context_processors.request',
-                'django.contrib.auth.context_processors.auth',
-                'django.contrib.messages.context_processors.messages',
+        "BACKEND": "django.template.backends.django.DjangoTemplates",  # موتور Template
+        "DIRS": [BASE_DIR / "templates"],  # مسیر پوشه قالب‌ها
+        "APP_DIRS": True,  # فعال کردن Templateهای اپ‌ها
+        "OPTIONS": {
+            "context_processors": [  # Context processor ها
+                "django.template.context_processors.debug",
+                "django.template.context_processors.request",
+                "django.contrib.auth.context_processors.auth",
+                "django.contrib.messages.context_processors.messages",
             ],
         },
     },
 ]
 
-WSGI_APPLICATION = 'core.wsgi.application'
+WSGI_APPLICATION = "core.wsgi.application"  # فایل WSGI پروژه
 
-
-# Database
-# https://docs.djangoproject.com/en/4.2/ref/settings/#databases
+# ======================================================================================================================
+# تنظیمات دیتابیس
 
 DATABASES = {
     "default": {
-        "ENGINE": "django.db.backends.postgresql",
-        "NAME": config("PG_NAME", default="default_database"),
-        "USER": config("PG_USER", default="username"),
-        "PASSWORD": config("PG_PASSWORD", default="password"),
-        "HOST": config("PG_HOST", default="db"),
-        "PORT": config("PG_PORT", cast=int, default=5432),
+        "ENGINE": "django.db.backends.postgresql",  # موتور PostgreSQL
+        "NAME": config("PG_NAME", default="default_database"),  # نام دیتابیس
+        "USER": config("PG_USER", default="username"),  # نام کاربری
+        "PASSWORD": config("PG_PASSWORD", default="password"),  # پسورد
+        "HOST": config("PG_HOST", default="db"),  # هاست دیتابیس
+        "PORT": config("PG_PORT", cast=int, default=5432),  # پورت
     }
 }
 
-
-# Password validation
-# https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
+# ======================================================================================================================
+# اعتبارسنجی پسورد
 
 AUTH_PASSWORD_VALIDATORS = [
     {
-        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
+        "NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator",
     },
     {
-        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
+        "NAME": "django.contrib.auth.password_validation.MinimumLengthValidator",
     },
     {
-        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
+        "NAME": "django.contrib.auth.password_validation.CommonPasswordValidator",
     },
     {
-        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
+        "NAME": "django.contrib.auth.password_validation.NumericPasswordValidator",
     },
 ]
 
+# ======================================================================================================================
+# بین المللی سازی
 
-# Internationalization
-# https://docs.djangoproject.com/en/4.2/topics/i18n/
+LANGUAGE_CODE = "en-us"  # زبان پروژه
+TIME_ZONE = "UTC"  # منطقه زمانی
+USE_I18N = True  # فعال بودن ترجمه
+USE_TZ = True  # فعال بودن timezone-aware
 
-LANGUAGE_CODE = 'en-us'
-
-TIME_ZONE = 'UTC'
-
-USE_I18N = True
-
-USE_TZ = True
-
-
-# تنظیمات فایل‌های استاتیک (CSS, JS, تصاویر)
-STATIC_URL = "/static/"
+# ======================================================================================================================
+# فایل‌های استاتیک و رسانه
+STATIC_URL = "/static/"  # URL فایل‌های استاتیک
 STATIC_ROOT = BASE_DIR / "staticfiles"  # مسیر جمع‌آوری فایل‌های استاتیک
-MEDIA_ROOT = BASE_DIR / "media"          # مسیر فایل‌های آپلود شده توسط کاربر
-MEDIA_URL = "/media/"
-STATICFILES_DIRS = [
-    BASE_DIR / "static",  # مسیر فایل‌های استاتیک در پروژه
-]
-
-# Default primary key field type
-# https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
-
-DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-
+MEDIA_ROOT = BASE_DIR / "media"  # مسیر فایل‌های آپلود شده
+MEDIA_URL = "/media/"  # URL فایل‌های رسانه‌ای
+STATICFILES_DIRS = [BASE_DIR / "static"]  # مسیر فایل‌های استاتیک در پروژه
+# ======================================================================================================================
+# کلید پیش‌فرض مدل‌ها
+DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"  # نوع پیش‌فرض کلید اصلی
+# ======================================================================================================================
+# تنظیمات CORS
 CORS_ALLOWED_ORIGINS = [
-  "http://localhost:3000",
+    "http://localhost:3000",  # اجازه دسترسی از فرانت React
 ]
-CORS_ALLOW_ALL_ORIGINS = True
-
-OPENWEATHER_API_KEY = '72eb22b83816ad96b1f44854e8ee2ffd'
+CORS_ALLOW_ALL_ORIGINS = True  # اجازه همه منابع (در توسعه)
+# ======================================================================================================================
+# کلید API OpenWeatherMap
+OPENWEATHER_API_KEY = (
+    "72eb22b83816ad96b1f44854e8ee2ffd"  # کلید API برای گرفتن داده‌های هواشناسی
+)
+# ======================================================================================================================
