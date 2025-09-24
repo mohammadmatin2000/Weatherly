@@ -2,20 +2,29 @@ import React from 'react';
 import './CityInput.css';
 
 export default class CityInput extends React.Component {
-  render(props) {
-    const onKlickHandler = async e => {
+  render() {
+    const onKlickHandler = async (e) => {
       e.persist();
       const eventKey = e.which ? e.which : e.keyCode;
-      const city = e.target.value;
+      const city = e.target.value.trim();
 
-      // check if input contains only letters after Enter was pressed
+      // وقتی کلید Enter زده شد
       if (eventKey === 13) {
-        if (/^[a-zA-ZäöüÄÖÜß ]+$/.test(city)) {
+        // بررسی اینکه فقط حروف فارسی یا انگلیسی وارد شده باشد
+        if (/^[a-zA-Z\u0600-\u06FF ]+$/.test(city)) {
           e.target.classList.add('loading');
 
-          if (await this.props.makeApiCall(city)) e.target.placeholder = 'Enter a City...';
-          else e.target.placeholder = 'City was not found, try again...';
-        } else e.target.placeholder = 'Please enter a valid city name...';
+          // فراخوانی API
+          const success = await this.props.makeApiCall(city);
+          if (success) {
+            e.target.placeholder = 'نام شهر را وارد کنید...';
+          } else {
+            e.target.placeholder = 'شهر یافت نشد، دوباره تلاش کنید...';
+          }
+        } else {
+          e.target.placeholder = 'لطفاً نام شهر معتبر وارد کنید...';
+        }
+
         e.target.classList.remove('loading');
         e.target.value = '';
       }
@@ -39,7 +48,7 @@ export default class CityInput extends React.Component {
         className='city-input'
         style={style}
         type='text'
-        placeholder='Enter a City...'
+        placeholder='نام شهر را وارد کنید...'
         onKeyPress={onKlickHandler}
       />
     );

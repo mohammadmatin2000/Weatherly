@@ -37,7 +37,7 @@ class App extends React.Component {
 
     } catch (err) {
       console.error(err);
-      this.setState({ error: "Error fetching data", loading: false });
+      this.setState({ error: "خطا در دریافت اطلاعات", loading: false });
       return false;
     }
   };
@@ -56,7 +56,7 @@ class App extends React.Component {
     return (
       <div className="App">
         <header className="App-header">
-          {this.state.loading && <p>Loading...</p>}
+          {this.state.loading && <p>در حال بارگذاری...</p>}
           {this.state.error && <p style={{ color: "red" }}>{this.state.error}</p>}
 
           <MainWeatherWindow
