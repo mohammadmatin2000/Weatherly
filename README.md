@@ -15,6 +15,9 @@
 <hr>
 
 <h1>🎞️ Demo</h1>
-<hr>
-![Weatherly Presentation](/Document/Video/vi.gif)
-<hr>
+
+<img src="Document/Video/video.gif" alt="Weatherly Presentation" style="display: block; margin: auto;">
+
+
+
+
